@@ -12,7 +12,7 @@ function Products() {
     <>
       <Filters />
       <div className="products">
-        {product===null?null:(product.map(product1 => {
+        {product===undefined?"":(product.map(product1 => {
           return (
             <ProductItem
               key={product1._id}
@@ -22,7 +22,7 @@ function Products() {
           );
         }))}
       </div>
-      {product===null?null:(product.length === 0 && <Loading />)}
+      {product===undefined?"":(product.length === 0 && <Loading />)}
     </>
   );
 }
