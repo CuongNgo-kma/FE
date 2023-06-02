@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
+import url from './url';
 // import url from './url';
 
 function ProductAPI() {
@@ -12,7 +13,7 @@ function ProductAPI() {
   const [result, setResult] = useState(0)
   useEffect(() => {
     const getProducts = async () => {
-      const res = await axios.get(`https://be-jade.vercel.app/api/products?limit=${page * 9}&${category}&${sort}&title[regex]=${search}`)
+      const res = await axios.get(`${url}/api/products?limit=${page * 9}&${category}&${sort}&title[regex]=${search}`)
       setProduct(res.data.products)
       setResult(res.data.result)
     }
