@@ -57,7 +57,6 @@ function PaypalButton({ total }) {
       );
       setIdPayment(res.id);
       setSaveToken(token);
-      // await axios.post(`${res.links[3].href}`).then(result=>console.log(result))
 
       console.log(res);
 
@@ -89,14 +88,14 @@ function PaypalButton({ total }) {
           purchase_units: [{ shipping }],
         } = paymentResult;
         await axios.post(
-          "/api/payment",
+          `${url}/api/payment`,
           { cart: item, paymentID: id, address: shipping },
           {
             headers: { Authorization: tokenUser[0] },
           }
         );
 
-        await axios.patch('/user/deletecart', {}, {
+        await axios.patch(`${url}/user/deletecart`, {}, {
           headers: { Authorization: tokenUser[0] }
         })
 
