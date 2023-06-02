@@ -7,7 +7,7 @@ function CategoriesAPI() {
 
     useEffect(()=>{
         const getCategories = async ()=>{
-          const res = await axios.get('/api/category')
+          const res = await axios.get('https://be-jade.vercel.app/api/category')
             console.log(res);
             setCategories(res.data)
         }

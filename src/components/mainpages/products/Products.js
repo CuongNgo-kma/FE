@@ -6,7 +6,7 @@ import Filters from "./Filters";
 
 function Products() {
   const state = useContext(globalState);
-  const [product, setProduct] = state.ProductAPI.product;
+  const [product] = state.ProductAPI.product;
   const [isAdmin] = state.UserAPI.isAdmin;
   return (
     <>
