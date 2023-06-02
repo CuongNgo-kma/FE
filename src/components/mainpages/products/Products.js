@@ -8,7 +8,7 @@ import Filters from './Filters';
 function Products() {
     const state = useContext(globalState)
     const [product] = state.ProductAPI.product
-    const [isAdmin] = state.UserAPI.isAdmin 
+    const isAdmin = state.UserAPI.isAdmin 
     return (
         <>
         <Filters/>
