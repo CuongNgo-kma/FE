@@ -7,14 +7,13 @@ import url from "./api/url";
 
 export const globalState = createContext();
 export const DataProvider = ({ children }) => {
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
       const refreshToken = async () => {
         const res = await axios.get(`${url}/user/refresh_token`);
-        console.log("test");
         setToken(res.data.accesstoken);
         setTimeout(() => {
           refreshToken();
