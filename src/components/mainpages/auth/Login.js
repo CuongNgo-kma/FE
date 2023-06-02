@@ -12,7 +12,7 @@ function Login() {
   const loginSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/user/login', { ...user })
+      await axios.post('https://be-jade.vercel.app/user/login', { ...user })
       localStorage.setItem('firstLogin', true)
       localStorage.setItem('email',user.email)
       window.location.href = "/"
