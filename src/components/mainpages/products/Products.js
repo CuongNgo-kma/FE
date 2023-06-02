@@ -12,7 +12,7 @@ function Products() {
     <>
       <Filters />
       <div className="products">
-        {product.map(product1 => {
+        {product?.map(product1 => {
           return (
             <ProductItem
               key={product1._id}
