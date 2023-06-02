@@ -22,7 +22,7 @@ function Products() {
           );
         })}
       </div>
-      {product.length === 0 && <Loading />}
+      {product.length==null?null:(product.length === 0 && <Loading />)}
     </>
   );
 }
