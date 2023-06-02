@@ -6,13 +6,13 @@ import Filters from "./Filters";
 
 function Products() {
   const state = useContext(globalState);
-  const product = state.ProductAPI.product;
+  const [product, setProduct] = state.ProductAPI.product;
   const [isAdmin] = state.UserAPI.isAdmin;
   return (
     <>
       <Filters />
       <div className="products">
-        {product.map((product1) => {
+        {product.map(product1 => {
           return (
             <ProductItem
               key={product1._id}
