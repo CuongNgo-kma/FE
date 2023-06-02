@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { globalState } from "../../globalState";
 import { useContext } from "react";
 import Menu from "./icon/bars-solid.svg";
-import Cart from "../Headers/icon/cart-plus-solid.svg";
-import Close from "../Headers/icon/circle-xmark-solid.svg";
+import Cart from "../headers/icon/cart-plus-solid.svg";
+import Close from "../headers/icon/circle-xmark-solid.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
