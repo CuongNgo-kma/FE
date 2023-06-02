@@ -86,7 +86,7 @@ function Cart() {
   const addPayment = async (id, shipping) => {
     await axios
       .post(
-        "api/payment",
+        "/api/payment",
         { paymentID: id, cart: cart, address: shipping },
         {
           headers: { Authorization: token },
