@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import ProductAPI from "./api/ProductAPI";
-// import url from "./api/url";
 import UserAPI from "./api/UserAPI";
 import CategoriesAPI from "./api/CategoriesAPI";
 import url from "./api/url";
@@ -15,6 +14,7 @@ export const DataProvider = ({ children }) => {
     if (firstLogin) {
       const refreshToken = async () => {
         const res = await axios.get(`${url}/user/refresh_token`);
+        console.log("test");
         setToken(res.data.accesstoken);
         setTimeout(() => {
           refreshToken();
