@@ -13,10 +13,7 @@ function ProductAPI() {
   useEffect(() => {
     const getProducts = async () => {
       const res = await axios.get(
-        `/api/products?limit=${
-          page * 9
-        }&${category}&${sort}&title[regex]=${search}`
-      );
+        `https://be-jade.vercel.app/api/products?limit=${page * 9}&${category}&${sort}&title[regex]=${search}`);
       setProduct(res.data.products);
       setResult(res.data.result);
     };
