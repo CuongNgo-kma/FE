@@ -7,7 +7,7 @@ import url from "./api/url";
 
 export const globalState = createContext();
 export const DataProvider = ({ children }) => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(false);
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");

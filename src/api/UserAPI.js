@@ -27,17 +27,15 @@ function UserAPI(token) {
             getUser()
             
         }
-    },[token])
-    useEffect(()=>{
         if (token) {
-            const getHistory = async()=>{
+            const getHistory = async () => {
                 const res = await axios.get(`${url}/user/history`, {
                     headers: {
                         Authorization: token
                     }
                 })
                 const nhung = await axios.get(`${url}/user/infor`, {
-                    headers:{
+                    headers: {
                         Authorization: token
                     }
                 })
@@ -47,8 +45,31 @@ function UserAPI(token) {
             }
             getHistory()
         }
-        
+
+
+
     },[token])
+    // useEffect(()=>{
+    //     if (token) {
+    //         const getHistory = async()=>{
+    //             const res = await axios.get(`${url}/user/history`, {
+    //                 headers: {
+    //                     Authorization: token
+    //                 }
+    //             })
+    //             const nhung = await axios.get(`${url}/user/infor`, {
+    //                 headers:{
+    //                     Authorization: token
+    //                 }
+    //             })
+    //             setUserId(nhung.data._id)
+    //             setName(nhung.data.name)
+    //             // console.log(res);
+    //         }
+    //         getHistory()
+    //     }
+        
+    // },[token])
     const addCart = async (product) => {
         console.log(isLogged);
         if (!isLogged) {
