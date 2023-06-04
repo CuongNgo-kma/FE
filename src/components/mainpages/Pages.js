@@ -7,12 +7,10 @@ import { Routes, Route } from "react-router-dom";
 import NotFound from "./ultils/NotFound/NotFound";
 import DetailProduct from "./DetailProduct/DetailProduct";
 import { globalState } from "../../globalState";
-// import SearchByImages from "../searchByImage/SearchByImages";
 import OrderHistory from "./history/OrderHistory ";
 import OrderDetails from "./history/OrderDetails";
 import CreateProduct from "./createProduct/CreateProduct";
 import Categories from "./category/Categories";
-import EditProduct from "./edit_product/EditProduct";
 import ProductClassifier from '../detectProduct/ModelDetectImage'
 import Profile from "./profile/Profile";
 import ChangePassword from "../changepassword/ChangePassword";

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { globalState } from "../../../../globalState";
 import axios from "axios";
+import url from "../../../../api/url";
 function BtnRender({ product }) {
   const state = useContext(globalState);
   const [isAdmin] = state.UserAPI.isAdmin;
@@ -14,7 +15,7 @@ function BtnRender({ product }) {
       
       const confirmed = window.confirm(`Bạn có chắc muốn xoá  "${product.title}"`);
       if (confirmed) {
-        await axios.delete(`/api/products/${product._id}`, {
+        await axios.delete(`${url}/api/products/${product._id}`, {
           headers: {
             Authorization: token
           }
