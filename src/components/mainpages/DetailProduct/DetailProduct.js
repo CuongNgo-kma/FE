@@ -9,7 +9,7 @@ function DetailProduct() {
   const [product] = state.ProductAPI.product;
   const addCart = state.UserAPI.addCart;
   const [DetailProduct, setDetailProduct] = useState([]);
-
+console.log(product);
   
 
   useEffect(() => {
