@@ -13,9 +13,11 @@ function Login() {
   const loginSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${url}/user/login`, { ...user })
+     const res = await axios.post(`${url}/user/login`, { ...user })
       localStorage.setItem('firstLogin', true)
       localStorage.setItem('email',user.email)
+      // localStorage.setItem('token1', )
+      console.log(res.data);
       window.location.href = "/"
 
     } catch (error) {
