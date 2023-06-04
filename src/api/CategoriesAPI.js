@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import url from './url'
 
 function CategoriesAPI() {
     const [categories, setCategories] = useState([])
@@ -7,7 +8,7 @@ function CategoriesAPI() {
 
     useEffect(()=>{
         const getCategories = async ()=>{
-          const res = await axios.get("/api/category")
+          const res = await axios.get(`${url}/api/category`)
             console.log(res);
             setCategories(res.data)
         }
