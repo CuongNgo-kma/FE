@@ -8,10 +8,8 @@ const initialState = {
   product_id: "",
   title: "",
   price: 0,
-  description:
-    "",
-  content:
-    "",
+  description: "",
+  content: "",
   category: "",
   _id: "",
 };
@@ -39,11 +37,11 @@ function CreateProduct() {
       setOnEdit(true);
       if (product) {
         product.forEach((product1) => {
-        if (product1._id === param.id) {
-          setProduct(product1);
-          setImages(product1.images);
-        }
-      });
+          if (product1._id === param.id) {
+            setProduct(product1);
+            setImages(product1.images);
+          }
+        });
       }
     } else {
       setOnEdit(false);
@@ -72,7 +70,7 @@ function CreateProduct() {
       formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post(`/api/upload`, formData, {
+      const res = await axios.post(`${url}/api/upload`, formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -81,7 +79,7 @@ function CreateProduct() {
       setLoading(false);
       setImages(res.data);
     } catch (err) {
-      alert(err.response.data.msg);
+      alert("Lỗi upload");
     }
   };
 
@@ -229,11 +227,13 @@ function CreateProduct() {
             onChange={handleChangeInput}
           >
             <option value="">Please select a category</option>
-            {categories ? (categories.map((category) => (
-              <option value={category._id} key={category._id}>
-                {category.name}
-              </option>
-            ))):""}
+            {categories
+              ? categories.map((category) => (
+                  <option value={category._id} key={category._id}>
+                    {category.name}
+                  </option>
+                ))
+              : ""}
           </select>
         </div>
 
