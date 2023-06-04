@@ -6,10 +6,9 @@ import ProductItem from "../ultils/ProductItem/ProductItem";
 function DetailProduct() {
   const params = useParams();
   const state = useContext(globalState);
-  const products = state.ProductAPI.product;
+  const [product] = state.ProductAPI.product;
   const addCart = state.UserAPI.addCart;
   const [DetailProduct, setDetailProduct] = useState([]);
-  const [isLogged] = state.UserAPI.isLogged
 
   
 
@@ -17,10 +16,10 @@ function DetailProduct() {
     console.log("re render");
     console.log(params);
     if (params.id) {
-      if (products!=undefined) {
-        products.forEach((product) => {
-          if (product._id === params.id) {
-            setDetailProduct(product);
+      if (product!=undefined) {
+        product.forEach((product1) => {
+          if (product1._id === params.id) {
+            setDetailProduct(product1);
           }
         });
       }
