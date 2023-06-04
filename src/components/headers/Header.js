@@ -31,6 +31,9 @@ function Header() {
         <li>
           <Link to="/category">Categories</Link>
         </li>
+        <li>
+          <Link to={`/profile/${userId}`}>Profile</Link>
+        </li>
       </>
     );
   };
@@ -43,6 +46,9 @@ function Header() {
         </li>
         <li>
           <Link to="/history">history</Link>
+        </li>
+        <li>
+          <Link to={`/profile/${userId}`}>Profile</Link>
         </li>
         <li>
           <Link to="/" onClick={logoutUser}>
@@ -69,9 +75,7 @@ function Header() {
         <li>
           <Link to="/">{isAdmin ? "Products" : "Shop"}</Link>
         </li>
-        <li>
-          <Link to={`/profile/${userId}`}>Profile</Link>
-        </li>
+        
 
         {isAdmin && adminRouter()}
         {isLogged ? (
