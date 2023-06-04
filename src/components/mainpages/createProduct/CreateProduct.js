@@ -18,7 +18,7 @@ const initialState = {
 
 function CreateProduct() {
   const state = useContext(globalState);
-  const [product, setProduct] = useState(initialState);
+  const [product2, setProduct] = useState(initialState);
   const [categories] = state.CategoriesAPI.categories;
   const [images, setImages] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ function CreateProduct() {
   const navigate = useNavigate();
   const param = useParams();
 
-  const products = state.ProductAPI.product.product;
+  const [product] = state.ProductAPI.product;
 
   const [onEdit, setOnEdit] = useState(false);
   const [callback, setCallback] = state.ProductAPI.callback;
@@ -37,18 +37,20 @@ function CreateProduct() {
   useEffect(() => {
     if (param.id) {
       setOnEdit(true);
-      products.forEach((product) => {
-        if (product._id === param.id) {
-          setProduct(product);
-          setImages(product.images);
+      if (product) {
+        product.forEach((product1) => {
+        if (product1._id === param.id) {
+          setProduct(product1);
+          setImages(product1.images);
         }
       });
+      }
     } else {
       setOnEdit(false);
       setProduct(initialState);
       setImages(false);
     }
-  }, [param.id, products]);
+  }, [param.id, product]);
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -103,7 +105,7 @@ function CreateProduct() {
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    setProduct({ ...product2, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -227,11 +229,11 @@ function CreateProduct() {
             onChange={handleChangeInput}
           >
             <option value="">Please select a category</option>
-            {categories.map((category) => (
+            {categories ? (categories.map((category) => (
               <option value={category._id} key={category._id}>
                 {category.name}
               </option>
-            ))}
+            ))):""}
           </select>
         </div>
 
