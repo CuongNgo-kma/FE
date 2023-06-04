@@ -16,8 +16,7 @@ function Login() {
      const res = await axios.post(`${url}/user/login`, { ...user })
       localStorage.setItem('firstLogin', true)
       localStorage.setItem('email',user.email)
-      // localStorage.setItem('token1', )
-      console.log(res.data);
+      localStorage.setItem('token1', res.data.accesstoken )
       window.location.href = "/"
 
     } catch (error) {

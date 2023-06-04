@@ -16,12 +16,14 @@ export const DataProvider = ({ children }) => {
       const refreshToken = async () => {
         const res = await axios.get(`/user/refresh_token`);
         setToken(res.data.accesstoken);
-        console.log(res);
+        const x = localStorage.getItem("token1")
+        console.log(x);
         setTimeout(() => {
           refreshToken();
         }, 10 * 60 * 1000);
       };
       refreshToken();
+      
     }
   }, []);
 
