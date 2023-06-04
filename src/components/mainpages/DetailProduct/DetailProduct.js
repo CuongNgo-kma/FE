@@ -9,14 +9,13 @@ function DetailProduct() {
   const [product] = state.ProductAPI.product;
   const addCart = state.UserAPI.addCart;
   const [DetailProduct, setDetailProduct] = useState([]);
-console.log(product);
-  
+  console.log(product);
 
   useEffect(() => {
     console.log("re render");
     console.log(params);
     if (params.id) {
-      if (product!=undefined) {
+      if (product !== undefined) {
         product.forEach((product1) => {
           if (product1._id === params.id) {
             setDetailProduct(product1);
