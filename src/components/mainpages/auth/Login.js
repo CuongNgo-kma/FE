@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import url from '../../../api/url'
 function Login() {
   const [user, setUser] = useState({
     email: '', password: ''
@@ -12,7 +13,7 @@ function Login() {
   const loginSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/user/login', { ...user })
+      await axios.post(`${url}/user/login`, { ...user })
       localStorage.setItem('firstLogin', true)
       localStorage.setItem('email',user.email)
       window.location.href = "/"
