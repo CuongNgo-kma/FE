@@ -1,3 +1,3 @@
-const url = "https://be-eosin.vercel.app"
+const url = "https://be1-one.vercel.app"
 
 export default url
