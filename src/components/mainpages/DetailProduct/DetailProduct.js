@@ -15,13 +15,12 @@ function DetailProduct() {
     console.log("re render");
     console.log(params);
     if (params.id) {
-      if (product !== undefined) {
         product.forEach((product1) => {
           if (product1._id === params.id) {
             setDetailProduct(product1);
           }
         });
-      }
+      
     }
   }, [params.id, products]);
 
