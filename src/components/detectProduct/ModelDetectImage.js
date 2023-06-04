@@ -38,14 +38,16 @@ const ProductClassifier = () => {
       }
     }
   };
-
+ 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      imageRef.current.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+    if (file) {   
+      const reader = new FileReader();
+      reader.onload = () => {
+        imageRef.current.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (

@@ -5,7 +5,6 @@ import axios from 'axios'
 
 function OrderDetails() {
     const state = useContext(globalState)
-    const [history] = state.UserAPI.history
     const [token] = state.token
     const [orderDetails, setOrderDetails] = useState([])
     const [isAdmin] = state.UserAPI.isAdmin
