@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { globalState } from "../../../globalState";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import url from "../../../api/url";
 function Profile() {
   const params = useParams();
   const { id } = params;
@@ -98,7 +99,7 @@ function Profile() {
     }
   };
   const loadProfileUser = async () => {
-    const res = await axios.get("/user/infor", {
+    const res = await axios.get(`${url}/user/infor`, {
       headers: {
         Authorization: token,
       },
