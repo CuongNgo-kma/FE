@@ -13,7 +13,7 @@ const ProductClassifier = () => {
   const state = useContext(globalState);
   const [category, setCategory] = state.ProductAPI.category;
   const [categories] = state.CategoriesAPI.categories;
-  const products = state.ProductAPI.product.product;
+  const [product] = state.ProductAPI.product;
   const [isAdmin] = state.UserAPI.isAdmin;
   const loadModel = async () => {
     const model = await mobilenet.load();
@@ -58,17 +58,17 @@ const ProductClassifier = () => {
       </div>
       <div className="row">
         <div className="products">
-          {products.map((product) => {
+          {product === undefined ? "" : (product.map((product1) => {
             return (
               <ProductItem
-                key={product._id}
-                product={product}
+                key={product1._id}
+                product={product1}
                 isAdmin={isAdmin}
               />
             );
-          })}
+          }))}
         </div>
-        {products.length === 0 && <Loading />}
+        {product.length === 0 && <Loading />}
       </div>
     </>
   );
