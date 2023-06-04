@@ -6,7 +6,6 @@ import Cart from "../headers/icon/cart-plus-solid.svg";
 import Close from "../headers/icon/circle-xmark-solid.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import url from "../../api/url";
 
 function Header() {
   const state = useContext(globalState);
@@ -17,7 +16,7 @@ function Header() {
   const [token] = state.token;
   const [name] = state.UserAPI.name
   const logoutUser = async () => {
-    await axios.get(`${url}/user/logout`);
+    await axios.get("/user/logout");
     localStorage.removeItem("firstLogin");
     window.location.href = "/";
   };
@@ -30,9 +29,6 @@ function Header() {
         </li>
         <li>
           <Link to="/category">Categories</Link>
-        </li>
-        <li>
-          <Link to={`/profile/${userId}`}>Profile</Link>
         </li>
       </>
     );

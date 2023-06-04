@@ -77,7 +77,7 @@ npm manifest:
         "last 1 safari version"
       ]
     },
-    "proxy": "https://be-jade.vercel.app",
+    "proxy": "http://localhost:5000",
     "devDependencies": {
       "@babel/eslint-parser": "^7.19.1"
     }

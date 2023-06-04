@@ -6,23 +6,24 @@ import ProductItem from "../ultils/ProductItem/ProductItem";
 function DetailProduct() {
   const params = useParams();
   const state = useContext(globalState);
-  const [product] = state.ProductAPI.product;
+  const products = state.ProductAPI.product.product;
   const addCart = state.UserAPI.addCart;
   const [DetailProduct, setDetailProduct] = useState([]);
-  console.log(product);
+  const [isLogged] = state.UserAPI.isLogged
+
+  
 
   useEffect(() => {
     console.log("re render");
     console.log(params);
     if (params.id) {
-        product.forEach((product1) => {
-          if (product1._id === params.id) {
-            setDetailProduct(product1);
-          }
-        });
-      
+      products.forEach((product) => {
+        if (product._id === params.id) {
+          setDetailProduct(product);
+        }
+      });
     }
-  }, [params.id, product]);
+  }, [params.id, products]);
 
   if (DetailProduct.length === 0) {
     return null;
@@ -52,11 +53,11 @@ function DetailProduct() {
       <div>
         <h2>Realate products</h2>
         <div className="products">
-          {product===undefined?"":(product.map((product) => {
+          {products.map((product) => {
             return product.category === DetailProduct.category ? (
               <ProductItem key={product._id} product={product} />
             ) : null;
-          }))}
+          })}
         </div>
       </div>
     </>

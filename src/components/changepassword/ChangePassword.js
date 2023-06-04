@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { globalState } from "../../globalState";
 import { useParams } from "react-router-dom";
-import url from "../../api/url";
 
 function ChangePassword() {
   const param = useParams();
@@ -23,7 +22,7 @@ function ChangePassword() {
   const handleSubmit = async () => {
     const email = localStorage.getItem("email");
     try {
-      const res = await axios.post(`${url}/user/login`, {
+      const res = await axios.post("/user/login", {
         email: email,
         password: user.oldpass,
       });
@@ -32,7 +31,7 @@ function ChangePassword() {
           alert("Mật khẩu mới và mật khẩu nhập lại không khớp!");
         } else {
           await axios.patch(
-            `${url}/user/password/${id}`,
+            `/user/password/${id}`,
             { password: user.newpass },
             {
               headers: {

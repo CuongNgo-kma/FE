@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { globalState } from "../../../globalState";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import url from "../../../api/url";
 function Profile() {
   const params = useParams();
   const { id } = params;
@@ -48,7 +47,7 @@ function Profile() {
       formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post(`${url}/api/upload`, formData, {
+      const res = await axios.post("/api/upload", formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -70,7 +69,7 @@ function Profile() {
       if (!images) return alert("No Image Upload");
       console.log(user);
       await axios.patch(
-        `${url}/user/updateuser/${id}`,
+        `/user/updateuser/${id}`,
         { name: user.name, avatar: user.avatar, email: user.email },
         {
           headers: { Authorization: token },
@@ -86,7 +85,7 @@ function Profile() {
       if (!isAdmin) return alert("You're not an admin");
       setLoading(true);
       await axios.post(
-        `${url}/api/destroy`,
+        "/api/destroy",
         { public_id: images.public_id },
         {
           headers: { Authorization: token },
@@ -99,7 +98,7 @@ function Profile() {
     }
   };
   const loadProfileUser = async () => {
-    const res = await axios.get(`${url}}/user/infor`, {
+    const res = await axios.get("/user/infor", {
       headers: {
         Authorization: token,
       },

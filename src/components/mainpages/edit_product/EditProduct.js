@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import ProductItem from "../ultils/ProductItem/ProductItem";
 import axios from "axios";
 import { globalState } from "../../../globalState";
-import url from "../../../api/url";
 
 function EditProduct() {
   const params = useParams();
@@ -38,7 +37,7 @@ function EditProduct() {
   const updateProduct = async () => {
     try {
       await axios.put(
-        `${url}/api/products/${id}`,
+        `/api/products/${id}`,
         { product },
         {
           headers: {
@@ -65,7 +64,7 @@ function EditProduct() {
       formData.append("file", file);
 
       const response = await axios.post(
-        `${url}/api/upload`,
+        "/api/upload",
         formData,
         {
           headers: {

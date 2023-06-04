@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { globalState } from "../../../globalState";
 // import PaypalButton from './PaypalButton'
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import url from "../../../api/url";
 
 function Cart() {
   const state = useContext(globalState);
@@ -87,7 +86,7 @@ function Cart() {
   const addPayment = async (id, shipping) => {
     await axios
       .post(
-        `${url}/api/payment`,
+        "api/payment",
         { paymentID: id, cart: cart, address: shipping },
         {
           headers: { Authorization: token },
@@ -113,7 +112,7 @@ function Cart() {
 
   const addToCart = async (cart) => {
     await axios.patch(
-      `${url}/user/addcart`,
+      "/user/addcart",
       { cart },
       {
         headers: { Authorization: token },
@@ -170,7 +169,7 @@ function Cart() {
   const resetCart = async () => {
     try {
       await axios.patch(
-        `${url}user/deletecart`,
+        "user/deletecart",
         {},
         {
           headers: {

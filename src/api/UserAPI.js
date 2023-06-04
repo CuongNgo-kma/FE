@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import url from './url'
+
 
 function UserAPI(token) {
     const [isLogged, setIsLogged] = useState(false)
@@ -13,7 +13,7 @@ function UserAPI(token) {
         if (token) {
             const getUser =async ()=>{
                 try {
-                    const res = await axios.get(`${url}/user/infor`,{
+                    const res = await axios.get('/user/infor',{
                         headers: {Authorization: token}
                     })
                     setIsLogged(true)
@@ -27,15 +27,17 @@ function UserAPI(token) {
             getUser()
             
         }
+    },[token])
+    useEffect(()=>{
         if (token) {
-            const getHistory = async () => {
-                const res = await axios.get(`${url}/user/history`, {
+            const getHistory = async()=>{
+                const res = await axios.get('/user/history', {
                     headers: {
                         Authorization: token
                     }
                 })
-                const nhung = await axios.get(`${url}/user/infor`, {
-                    headers: {
+                const nhung = await axios.get('/user/infor', {
+                    headers:{
                         Authorization: token
                     }
                 })
@@ -45,31 +47,8 @@ function UserAPI(token) {
             }
             getHistory()
         }
-
-
-
-    },[token])
-    // useEffect(()=>{
-    //     if (token) {
-    //         const getHistory = async()=>{
-    //             const res = await axios.get(`${url}/user/history`, {
-    //                 headers: {
-    //                     Authorization: token
-    //                 }
-    //             })
-    //             const nhung = await axios.get(`${url}/user/infor`, {
-    //                 headers:{
-    //                     Authorization: token
-    //                 }
-    //             })
-    //             setUserId(nhung.data._id)
-    //             setName(nhung.data.name)
-    //             // console.log(res);
-    //         }
-    //         getHistory()
-    //     }
         
-    // },[token])
+    },[token])
     const addCart = async (product) => {
         console.log(isLogged);
         if (!isLogged) {
@@ -83,7 +62,7 @@ function UserAPI(token) {
         if (check) {
             setCart([...cart, { ...product, quantity: 1 }])
 
-            await axios.patch(`${url}/user/addcart`, { cart: [...cart, { ...product, quantity: 1 }] }, {
+            await axios.patch('/user/addcart', { cart: [...cart, { ...product, quantity: 1 }] }, {
                 headers: { Authorization: token }
             })
 

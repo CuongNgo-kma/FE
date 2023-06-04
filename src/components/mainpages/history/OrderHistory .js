@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { globalState } from '../../../globalState'
 import axios from 'axios'
-import url from '../../../api/url'
 
 function OrderHistory() {
   const state = useContext(globalState)
@@ -15,12 +14,12 @@ function OrderHistory() {
     if (token) {
       const getHistory = async () => {
         if (isAdmin) {
-          const res = await axios.get(`${url}/api/payment`, {
+          const res = await axios.get('/api/payment', {
             headers: { Authorization: token }
           })
           setHistory(res.data)
         } else {
-          const res = await axios.get(`${url}/user/history`, {
+          const res = await axios.get('/user/history', {
             headers: { Authorization: token }
           })
           setHistory(res.data)

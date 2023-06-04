@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { globalState } from "../../../globalState";
 import Loading from "../auth/Loading/Loading";
-import url from "../../../api/url";
 const initialState = {
   product_id: "",
   title: "",
@@ -70,7 +69,7 @@ function CreateProduct() {
       formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post(`${url}/api/upload`, formData, {
+      const res = await axios.post("/api/upload", formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -88,7 +87,7 @@ function CreateProduct() {
       if (!isAdmin) return alert("You're not an admin");
       setLoading(true);
       await axios.post(
-        `${url}/api/destroy`,
+        "/api/destroy",
         { public_id: images.public_id },
         {
           headers: { Authorization: token },
@@ -114,7 +113,7 @@ function CreateProduct() {
 
       if (onEdit) {
         await axios.put(
-          `${url}/api/products/${product._id}`,
+          `/api/products/${product._id}`,
           { ...product, images },
           {
             headers: { Authorization: token },
@@ -122,7 +121,7 @@ function CreateProduct() {
         );
       } else {
         await axios.post(
-          `${url}/api/products`,
+          "/api/products",
           { ...product, images },
           {
             headers: { Authorization: token },
