@@ -17,11 +17,13 @@ function DetailProduct() {
     console.log("re render");
     console.log(params);
     if (params.id) {
-      products === undefined ? "" : (products.forEach((product) => {
-        if (product._id === params.id) {
-          setDetailProduct(product);
-        }
-      }))
+      if (products!=undefined) {
+        products.forEach((product) => {
+          if (product._id === params.id) {
+            setDetailProduct(product);
+          }
+        });
+      }
     }
   }, [params.id, products]);
 
