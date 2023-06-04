@@ -19,11 +19,13 @@ function Filters() {
         <span>Filters:</span>
         <select name="category" value={category} onChange={handleCategory}>
           <option value="">All products</option>
-          {categories.map((category) => (
-            <option value={"category=" + category._id} key={category._id}>
-              {category.name}
-            </option>
-          ))}
+          {
+            categories === undefined ? "" : (categories.map((category) => (
+              <option value={"category=" + category._id} key={category._id}>
+                {category.name}
+              </option>
+            )))
+          }
         </select>
       </div>
       <input
