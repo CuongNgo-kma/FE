@@ -22,7 +22,7 @@ function DetailProduct() {
         });
       
     }
-  }, [params.id, products]);
+  }, [params.id, product]);
 
   if (DetailProduct.length === 0) {
     return null;
@@ -52,11 +52,11 @@ function DetailProduct() {
       <div>
         <h2>Realate products</h2>
         <div className="products">
-          {products.map((product) => {
+          {product===undefined?"":(product.map((product) => {
             return product.category === DetailProduct.category ? (
               <ProductItem key={product._id} product={product} />
             ) : null;
-          })}
+          }))}
         </div>
       </div>
     </>
