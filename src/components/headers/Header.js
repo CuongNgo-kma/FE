@@ -13,7 +13,6 @@ function Header() {
   const [isAdmin] = state.UserAPI.isAdmin;
   const [cart] = state.UserAPI.cart;
   const [userId] = state.UserAPI.userId;
-  const [token] = state.token;
   const [name] = state.UserAPI.name
   const logoutUser = async () => {
     await axios.get("/user/logout");
@@ -90,7 +89,7 @@ function Header() {
         ""
       ) : (
         <div className="cart-icon">
-          <span>{cart.length}</span>
+            <span>{cart === undefined ? "" : cart.length}</span>
           <Link to="/cart">
             <img src={Cart} alt="" width="30" />
           </Link>
