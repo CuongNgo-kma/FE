@@ -20,8 +20,8 @@ function ProductAPI() {
   }, [callback, category, sort, search, page])
 
   return {
-    product: { product, setProduct },
-    callback: [callback, setCallback],
+    product: [product, setProduct],
+    callback: [callback, setCallback],  
     category: [category, setCategory],
     sort: [sort, setSort],
     search: [search, setSearch],
