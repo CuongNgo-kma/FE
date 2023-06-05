@@ -69,7 +69,7 @@ function Categories() {
 
       <div className="col">
         {
-          categories.map(category => (
+          categories ? categories.map(category => (
             <div className="row" key={category._id}>
               <p>{category.name}</p>
               <div>
@@ -77,7 +77,7 @@ function Categories() {
                 <button onClick={() => deleteCategory(category._id)}>Delete</button>
               </div>
             </div>
-          ))
+          )) :""
         }
       </div>
     </div>

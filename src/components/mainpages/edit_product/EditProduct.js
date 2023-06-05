@@ -8,12 +8,12 @@ function EditProduct() {
   const params = useParams();
   const state = useContext(globalState);
   const token = state.token;
-  const products = state.ProductAPI.product.product;
+  const [product] = state.ProductAPI.product
   const addCart = state.UserAPI.addCart;
   const [DetailProduct, setDetailProduct] = useState([]);
   const [isLogged] = state.UserAPI.isLogged;
   const id = params.id;
-  const [product, setProduct] = useState({
+  const [products, setProduct] = useState({
     title: "",
     price: "",
     description: "",
@@ -23,13 +23,15 @@ function EditProduct() {
   const [images, setImages] = useState(null);
   useEffect(() => {
     if (params.id) {
-      products.forEach((product) => {
-        if (product._id === params.id) {
-          setDetailProduct(product);
-        }
-      });
+      if (product) {
+        product.forEach((product1) => {
+          if (product1._id === params.id) {
+            setDetailProduct(product1);
+          }
+        })
+      }
     }
-  }, [params.id, products]);
+  }, [params.id, product]);
 
   if (DetailProduct.length === 0) {
     return null;
@@ -51,7 +53,7 @@ function EditProduct() {
   };
   const handleChangeTitle = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    setProduct({ ...products, [name]: value });
   };
   const handleChangeImages = async (e) => {
     const x = e.target.files[0];

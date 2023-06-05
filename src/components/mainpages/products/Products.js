@@ -15,14 +15,14 @@ function Products() {
         <Filters/>
         <div className="products">
             {
-                product.map(product1 =>{
-                    return <ProductItem key={product1._id} product={product1} isAdmin={isAdmin}/>
-                })
+                    product ? product.map(product1 => {
+                        return <ProductItem key={product1._id} product={product1} isAdmin={isAdmin} />
+                    }):""
             }
         
 
         </div>
-        {product.length ===0 && <Loading/>}
+            {product ? product.length === 0 && <Loading /> : ""}
         </>
     )
 }

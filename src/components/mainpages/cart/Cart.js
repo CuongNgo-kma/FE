@@ -187,7 +187,7 @@ function Cart() {
   };
   return (
     <div>
-      {cart.map((product) => (
+      {cart ? (cart.map((product) => (
         <div className="detail cart" key={product._id}>
           <img src={product.images.url} alt="" />
           <div className="box-detail">
@@ -209,7 +209,7 @@ function Cart() {
             </div>
           </div>
         </div>
-      ))}
+      ))):""}
       <div className="total">
         <h3>Total: $ {total}</h3>
         <div style={{ marginTop: 40 }}>
