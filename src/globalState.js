@@ -4,7 +4,6 @@ import ProductAPI from "./api/ProductAPI";
 // import url from "./api/url";
 import UserAPI from "./api/UserAPI";
 import CategoriesAPI from "./api/CategoriesAPI";
-import url from "./api/url";
 
 export const globalState = createContext();
 export const DataProvider = ({ children }) => {
@@ -14,7 +13,7 @@ export const DataProvider = ({ children }) => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
       const refreshToken = async () => {
-        const res = await axios.get(`${url}/user/refresh_token`);
+        const res = await axios.get("/user/refresh_token");
         setToken(res.data.accesstoken);
         setTimeout(() => {
           refreshToken();
