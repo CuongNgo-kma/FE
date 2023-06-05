@@ -6,7 +6,6 @@ import Cart from "../headers/icon/cart-plus-solid.svg";
 import Close from "../headers/icon/circle-xmark-solid.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import url from "../../api/url";
 
 function Header() {
   const state = useContext(globalState);
@@ -14,9 +13,10 @@ function Header() {
   const [isAdmin] = state.UserAPI.isAdmin;
   const [cart] = state.UserAPI.cart;
   const [userId] = state.UserAPI.userId;
+  const [token] = state.token;
   const [name] = state.UserAPI.name
   const logoutUser = async () => {
-    await axios.get(`${url}/user/logout`);
+    await axios.get("/user/logout");
     localStorage.removeItem("firstLogin");
     window.location.href = "/";
   };
@@ -90,7 +90,7 @@ function Header() {
         ""
       ) : (
         <div className="cart-icon">
-            <span>{cart === undefined ? "" : cart.length}</span>
+          <span>{cart.length}</span>
           <Link to="/cart">
             <img src={Cart} alt="" width="30" />
           </Link>

@@ -13,7 +13,7 @@ const ProductClassifier = () => {
   const state = useContext(globalState);
   const [category, setCategory] = state.ProductAPI.category;
   const [categories] = state.CategoriesAPI.categories;
-  const [product] = state.ProductAPI.product;
+  const products = state.ProductAPI.product.product;
   const [isAdmin] = state.UserAPI.isAdmin;
   const loadModel = async () => {
     const model = await mobilenet.load();
@@ -38,16 +38,14 @@ const ProductClassifier = () => {
       }
     }
   };
- 
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {   
-      const reader = new FileReader();
-      reader.onload = () => {
-        imageRef.current.src = reader.result;
-      };
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      imageRef.current.src = reader.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -60,17 +58,17 @@ const ProductClassifier = () => {
       </div>
       <div className="row">
         <div className="products">
-          {product === undefined ? "" : (product.map((product1) => {
+          {products.map((product) => {
             return (
               <ProductItem
-                key={product1._id}
-                product={product1}
+                key={product._id}
+                product={product}
                 isAdmin={isAdmin}
               />
             );
-          }))}
+          })}
         </div>
-        {product.length === 0 && <Loading />}
+        {products.length === 0 && <Loading />}
       </div>
     </>
   );

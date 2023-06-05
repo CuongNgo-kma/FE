@@ -3,20 +3,21 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { globalState } from "../../../globalState";
 import Loading from "../auth/Loading/Loading";
-import url from "../../../api/url";
 const initialState = {
   product_id: "",
   title: "",
   price: 0,
-  description: "",
-  content: "",
+  description:
+    "How to and tutorial videos of cool CSS effect, Web Design ideas,JavaScript libraries, Node.",
+  content:
+    "Welcome to our channel Dev AT. Here you can learn web designing, UI/UX designing, html css tutorials, css animations and css effects, javascript and jquery tutorials and related so on.",
   category: "",
   _id: "",
 };
 
 function CreateProduct() {
   const state = useContext(globalState);
-  const [product2, setProduct] = useState(initialState);
+  const [product, setProduct] = useState(initialState);
   const [categories] = state.CategoriesAPI.categories;
   const [images, setImages] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ function CreateProduct() {
   const navigate = useNavigate();
   const param = useParams();
 
-  const [product] = state.ProductAPI.product;
+  const products = state.ProductAPI.product.product;
 
   const [onEdit, setOnEdit] = useState(false);
   const [callback, setCallback] = state.ProductAPI.callback;
@@ -35,20 +36,18 @@ function CreateProduct() {
   useEffect(() => {
     if (param.id) {
       setOnEdit(true);
-      if (product) {
-        product.forEach((product1) => {
-          if (product1._id === param.id) {
-            setProduct(product1);
-            setImages(product1.images);
-          }
-        });
-      }
+      products.forEach((product) => {
+        if (product._id === param.id) {
+          setProduct(product);
+          setImages(product.images);
+        }
+      });
     } else {
       setOnEdit(false);
       setProduct(initialState);
       setImages(false);
     }
-  }, [param.id, product]);
+  }, [param.id, products]);
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -70,7 +69,7 @@ function CreateProduct() {
       formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post(`${url}/api/upload`, formData, {
+      const res = await axios.post("/api/upload", formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -79,7 +78,7 @@ function CreateProduct() {
       setLoading(false);
       setImages(res.data);
     } catch (err) {
-      alert("Lỗi upload");
+      alert(err.response.data.msg);
     }
   };
 
@@ -88,7 +87,7 @@ function CreateProduct() {
       if (!isAdmin) return alert("You're not an admin");
       setLoading(true);
       await axios.post(
-        `${url}/api/destroy`,
+        "/api/destroy",
         { public_id: images.public_id },
         {
           headers: { Authorization: token },
@@ -103,7 +102,7 @@ function CreateProduct() {
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product2, [name]: value });
+    setProduct({ ...product, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -114,7 +113,7 @@ function CreateProduct() {
 
       if (onEdit) {
         await axios.put(
-          `${url}/api/products/${product._id}`,
+          `/api/products/${product._id}`,
           { ...product, images },
           {
             headers: { Authorization: token },
@@ -122,7 +121,7 @@ function CreateProduct() {
         );
       } else {
         await axios.post(
-          `${url}/api/products`,
+          "/api/products",
           { ...product, images },
           {
             headers: { Authorization: token },
@@ -227,13 +226,11 @@ function CreateProduct() {
             onChange={handleChangeInput}
           >
             <option value="">Please select a category</option>
-            {categories
-              ? categories.map((category) => (
-                  <option value={category._id} key={category._id}>
-                    {category.name}
-                  </option>
-                ))
-              : ""}
+            {categories.map((category) => (
+              <option value={category._id} key={category._id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 

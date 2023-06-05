@@ -7,22 +7,22 @@ import Filters from './Filters';
 
 function Products() {
     const state = useContext(globalState)
-    const [product] = state.ProductAPI.product
+    const products = state.ProductAPI.product.product
     const [isAdmin] = state.UserAPI.isAdmin 
-   
+    const [search, setSearch] = useState()
     return (
         <>
         <Filters/>
         <div className="products">
             {
-                    product === undefined ? "" : (product.map(product => {
-                        return <ProductItem key={product._id} product={product} isAdmin={isAdmin} />
-                    }))
+                products.map(product =>{
+                    return <ProductItem key={product._id} product={product} isAdmin={isAdmin}/>
+                })
             }
         
 
         </div>
-        {product.length ===0 && <Loading/>}
+        {products.length ===0 && <Loading/>}
         </>
     )
 }

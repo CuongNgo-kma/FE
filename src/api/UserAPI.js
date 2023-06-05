@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import url from './url'
 
 
 function UserAPI(token) {
@@ -14,7 +13,7 @@ function UserAPI(token) {
         if (token) {
             const getUser =async ()=>{
                 try {
-                    const res = await axios.get(`${url}/user/infor`,{
+                    const res = await axios.get('/user/infor',{
                         headers: {Authorization: token}
                     })
                     setIsLogged(true)
@@ -32,12 +31,12 @@ function UserAPI(token) {
     useEffect(()=>{
         if (token) {
             const getHistory = async()=>{
-                const res = await axios.get(`${url}/user/history`, {
+                const res = await axios.get('/user/history', {
                     headers: {
                         Authorization: token
                     }
                 })
-                const nhung = await axios.get(`${url}/user/infor`, {
+                const nhung = await axios.get('/user/infor', {
                     headers:{
                         Authorization: token
                     }
@@ -63,7 +62,7 @@ function UserAPI(token) {
         if (check) {
             setCart([...cart, { ...product, quantity: 1 }])
 
-            await axios.patch(`${url}/user/addcart`, { cart: [...cart, { ...product, quantity: 1 }] }, {
+            await axios.patch('/user/addcart', { cart: [...cart, { ...product, quantity: 1 }] }, {
                 headers: { Authorization: token }
             })
 

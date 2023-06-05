@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { globalState } from '../../../globalState'
 import axios from 'axios'
-import url from '../../../api/url'
 
 function OrderDetails() {
     const state = useContext(globalState)
+    const [history] = state.UserAPI.history
     const [token] = state.token
     const [orderDetails, setOrderDetails] = useState([])
     const [isAdmin] = state.UserAPI.isAdmin
@@ -25,7 +25,7 @@ function OrderDetails() {
     },[])
     const getHistoryDetail = async() =>{
         if (isAdmin) {
-            const res = await axios.get(`${url}/api/payment`, {
+            const res = await axios.get('/api/payment', {
                 headers: { Authorization: token }
             })
             res.data.map(
@@ -37,7 +37,7 @@ function OrderDetails() {
             )
         }
         else {
-            const res = await axios.get(`${url}/user/history`, {
+            const res = await axios.get('/user/history', {
                 headers: { Authorization: token }
             })
             res.data.map(

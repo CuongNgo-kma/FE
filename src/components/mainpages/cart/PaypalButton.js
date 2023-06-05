@@ -20,7 +20,7 @@ function PaypalButton({ total }) {
       currency_code: "USD",
       value: product.price.toString(),
     },
-  }));
+  }))
 
   // console.log(tokenUser[0]);
 
@@ -57,7 +57,10 @@ function PaypalButton({ total }) {
       );
       setIdPayment(res.id);
       setSaveToken(token);
+      // await axios.post(`${res.links[3].href}`).then(result=>console.log(result))
+
       console.log(res);
+
       window.open(res.links[1].href);
     } catch (error) {
       console.log("erroo" + error);
@@ -86,20 +89,17 @@ function PaypalButton({ total }) {
           purchase_units: [{ shipping }],
         } = paymentResult;
         await axios.post(
-          `${url}/api/payment`,
+          "/api/payment",
           { cart: item, paymentID: id, address: shipping },
           {
             headers: { Authorization: tokenUser[0] },
           }
         );
 
-        await axios.patch(
-          `${url}/user/deletecart`,
-          {},
-          {
-            headers: { Authorization: tokenUser[0] },
-          }
-        );
+        await axios.patch('/user/deletecart', {}, {
+          headers: { Authorization: tokenUser[0] }
+        })
+
 
         alert(
           "Thanh toán thành công, bạn có thể xoá sản phẩm khỏi giỏ hàng nếu muốn !"
@@ -107,13 +107,17 @@ function PaypalButton({ total }) {
       } else {
         alert(
           "Thanh toán thất bại, vui lòng kiểm tra lại hoặc liên hệ hotline 0836668886 ! mã đơn hàng " +
-            paymentResult.id
+          paymentResult.id
         );
       }
     } catch (error) {
       alert("Bạn chưa tạo thanh toán!");
     }
   };
+
+
+
+
 
   return (
     <div className="btn-payment">
