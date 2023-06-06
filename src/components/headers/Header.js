@@ -6,6 +6,8 @@ import Cart from "../headers/icon/cart-plus-solid.svg";
 import Close from "../headers/icon/circle-xmark-solid.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { BiUser } from "react-icons/bi";
+
 
 function Header() {
   const state = useContext(globalState);
@@ -44,7 +46,11 @@ function Header() {
           <Link to="/history">history</Link>
         </li>
         <li>
-          <Link to={`/profile/${userId}`}>Profile</Link>
+          <Link to={`/profile/${userId}`}>
+            <span>
+              <BiUser size={25} />
+            </span>
+          </Link>
         </li>
         <li>
           <Link to="/" onClick={logoutUser}>

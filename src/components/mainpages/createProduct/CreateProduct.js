@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { globalState } from "../../../globalState";
 import Loading from "../auth/Loading/Loading";
+import url from '../../../api/url'
 const initialState = {
   product_id: "",
   title: "",
@@ -17,9 +18,9 @@ const initialState = {
 
 function CreateProduct() {
   const state = useContext(globalState);
-  const [product, setProduct] = useState(initialState);
+  const [products, setProduct] = useState(initialState);
   const [categories] = state.CategoriesAPI.categories;
-  const [images, setImages] = useState(false);
+  const [images, setImages] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [isAdmin] = state.UserAPI.isAdmin;
@@ -28,7 +29,7 @@ function CreateProduct() {
   const navigate = useNavigate();
   const param = useParams();
 
-  const products = state.ProductAPI.product.product;
+  const [product]= state.ProductAPI.product;
 
   const [onEdit, setOnEdit] = useState(false);
   const [callback, setCallback] = state.ProductAPI.callback;
@@ -36,73 +37,81 @@ function CreateProduct() {
   useEffect(() => {
     if (param.id) {
       setOnEdit(true);
-      products.forEach((product) => {
-        if (product._id === param.id) {
-          setProduct(product);
-          setImages(product.images);
-        }
-      });
+      if (product) {
+        product.forEach((product) => {
+          if (product._id === param.id) {
+            setProduct(product);
+            setImages(product.images);
+          }
+        });
+      }
     } else {
       setOnEdit(false);
       setProduct(initialState);
-      setImages(false);
+      // setImages(false);
     }
-  }, [param.id, products]);
+  }, [param.id, product]);
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    try {
-      if (!isAdmin) return alert("You're not an admin");
-      const file = e.target.files[0];
+  // const handleUpload = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (!isAdmin) return alert("You're not an admin");
+  //     const file = e.target.files[0];
 
-      if (!file) return alert("File not exist.");
+  //     if (!file) return alert("File not exist.");
 
-      if (file.size > 1024 * 1024)
-        // 1mb
-        return alert("Size too large!");
+  //     if (file.size > 1024 * 1024)
+  //       // 1mb
+  //       return alert("Size too large!");
 
-      if (file.type !== "image/jpeg" && file.type !== "image/png")
-        // 1mb
-        return alert("File format is incorrect.");
+  //     if (file.type !== "image/jpeg" && file.type !== "image/png")
+  //       // 1mb
+  //       return alert("File format is incorrect.");
 
-      let formData = new FormData();
-      formData.append("file", file);
+  //     let formData = new FormData();
+  //     formData.append("file", file);
 
-      setLoading(true);
-      const res = await axios.post("/api/upload", formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: token,
-        },
-      });
-      setLoading(false);
-      setImages(res.data);
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
+  //     setLoading(true);
+  //     const res = await axios.post(`/api/upload`, formData, {
+  //       headers: {
+  //         "content-type": "multipart/form-data",
+  //         Authorization: token,
+  //       },
+  //     });
+  //     setLoading(false);
+  //     setImages(res.data);
+  //   } catch (err) {
+  //     alert(err.response.data.msg);
+  //   }
+  // };
 
-  const handleDestroy = async () => {
-    try {
-      if (!isAdmin) return alert("You're not an admin");
-      setLoading(true);
-      await axios.post(
-        "/api/destroy",
-        { public_id: images.public_id },
-        {
-          headers: { Authorization: token },
-        }
-      );
-      setLoading(false);
-      setImages(false);
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
+  const handleChangeInputImage = (e)=>{
+    const val = e.target.value
+   
+    setImages(val)
+    console.log(val);
+  }
+  // const handleDestroy = async () => {
+  //   try {
+  //     if (!isAdmin) return alert("You're not an admin");
+  //     setLoading(true);
+  //     await axios.post(
+  //       `${url}/api/destroy`,
+  //       { public_id: images.public_id },
+  //       {
+  //         headers: { Authorization: token },
+  //       }
+  //     );
+  //     setLoading(false);
+  //     setImages(false);
+  //   } catch (err) {
+  //     alert(err.response.data.msg);
+  //   }
+  // };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    setProduct({ ...products, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -113,16 +122,24 @@ function CreateProduct() {
 
       if (onEdit) {
         await axios.put(
-          `/api/products/${product._id}`,
-          { ...product, images },
+          `${url}/api/products/${product._id}`,
+          { ...products, images: {
+              public_id: param,
+              url: images       
+          } },
           {
             headers: { Authorization: token },
           }
         );
+      
       } else {
         await axios.post(
-          "/api/products",
-          { ...product, images },
+          `${url}/api/products`,
+          {
+            ...products, images: {
+              public_id: param,
+              url: images
+            } },
           {
             headers: { Authorization: token },
           }
@@ -141,18 +158,20 @@ function CreateProduct() {
   return (
     <div className="create_product">
       <div className="upload">
-        <input type="file" name="file" id="file_up" onChange={handleUpload} />
+        {/* <input type="file" name="file" id="file_up" onChange={handleUpload} /> */}
+        
         {loading ? (
           <div id="file_img">
             <Loading />
           </div>
         ) : (
           <div id="file_img" style={styleUpload}>
-            <img src={images ? images.url : ""} alt="" />
-            <span onClick={handleDestroy}>X</span>
+              {onEdit ? <img src={images ? images.url : ""} alt="" /> : <img src={images ? images : ""} alt="" />}
           </div>
         )}
+       
       </div>
+      
 
       <form onSubmit={handleSubmit}>
         <div className="row">
@@ -162,12 +181,32 @@ function CreateProduct() {
             name="product_id"
             id="product_id"
             required
-            value={product.product_id}
+            value={products.product_id}
             onChange={handleChangeInput}
             disabled={onEdit}
           />
         </div>
-
+        {onEdit ? <div className="row">
+          <label htmlFor="title">Image Link</label>
+          <input
+            type="text"
+            name="image"
+            id="title"
+            required
+            value={images.url}
+            onChange={handleChangeInputImage}
+          />
+        </div> : <div className="row">
+          <label htmlFor="title">Image Link</label>
+          <input
+            type="text"
+            name="image"
+            id="title"
+            required
+            value={images}
+            onChange={handleChangeInputImage}
+          />
+        </div>}
         <div className="row">
           <label htmlFor="title">Title</label>
           <input
@@ -175,7 +214,7 @@ function CreateProduct() {
             name="title"
             id="title"
             required
-            value={product.title}
+            value={products.title}
             onChange={handleChangeInput}
           />
         </div>
@@ -187,7 +226,7 @@ function CreateProduct() {
             name="price"
             id="price"
             required
-            value={product.price}
+            value={products.price}
             onChange={handleChangeInput}
           />
         </div>
@@ -199,7 +238,7 @@ function CreateProduct() {
             name="description"
             id="description"
             required
-            value={product.description}
+            value={products.description}
             rows="5"
             onChange={handleChangeInput}
           />
@@ -212,7 +251,7 @@ function CreateProduct() {
             name="content"
             id="content"
             required
-            value={product.content}
+            value={products.content}
             rows="7"
             onChange={handleChangeInput}
           />
@@ -222,7 +261,7 @@ function CreateProduct() {
           <label htmlFor="categories">Categories: </label>
           <select
             name="category"
-            value={product.category}
+            value={products.category}
             onChange={handleChangeInput}
           >
             <option value="">Please select a category</option>
